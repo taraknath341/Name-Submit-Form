@@ -27,7 +27,6 @@ dashboard.post("/", async (req, res) => {
 })
 
 dashboard.post("/delete", express.json(), async (req, res) => {
-  console.log(req.body);
   await req.app.locals.dbCollection.deleteOne(new UserInfoSchema(req.body));
   res.sendStatus(200);
 })
