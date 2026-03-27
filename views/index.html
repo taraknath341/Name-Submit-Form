@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name Submit Form</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    form {
+      background: linear-gradient(white, lightgreen, white);
+      height: 28pc;
+      width: 25pc;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      text-align: center;
+      align-content: center;
+    }
+
+    input {
+      width: 17pc;
+      font-size: 1.5pc;
+      padding: .5pc;
+      outline: 1px solid black;
+      margin: .5pc;
+    }
+
+    .btn {
+      width: 6pc;
+      background-color: #fff;
+      border-style: none;
+    }
+  </style>
+</head>
+
+<body>
+  <form action="" method="post">
+    <input name="firstName" type="text" placeholder="Firstname" required>
+    <input name="lastName" type="text" placeholder="Lastname" required>
+    <input name="age" type="number" placeholder="Age" min="9" max="60">
+    <input name="email" type="email" placeholder="Email" required>
+    <input name="village" type="text" placeholder="Village" required>
+    <br>
+    <input type="reset" value="Reset" class="btn">
+    <input type="submit" value="Submit" class="btn">
+  </form>
+  <script src="script.js"></script>
+</body>
+
+</html>

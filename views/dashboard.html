@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    .data {
+      position: relative;
+      background-color: lightgreen;
+      width: 23pc;
+      font-size: 1.2pc;
+      padding: .5pc;
+      margin: .5pc;
+      display: inline-flex;
+    }
+
+    .delete,
+    .reload,
+    .logout {
+      height: 2pc;
+      width: 2pc;
+      font-size: 1.5pc;
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    }
+
+    .reload,
+    .logout {
+      font-size: 2pc;
+      width: 9pc;
+      height: 4pc;
+      bottom: 5px;
+    }
+
+    .logout {
+      right: 12pc;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Dashboard</h1>
+  <hr>
+  <div id="dashboard">
+
+    <!-- <div class="data">
+      firstName: Taraknath <br>
+      lastName: Karan <br>
+      age: 17 <br>
+      email: taraknath341@gmail.com <br>
+      village: Parulia <br>
+    </div> -->
+
+  </div>
+  <button class="reload" onclick="reload()">Reload</button>
+  <a href="/logout"><button class="logout">Logout</button></a>
+  <script>
+    "use strict";
+    const dashboard = document.getElementById("dashboard");
+    let data = null;
+    let c = 0;
+    const createUI = ({ firstName, lastName, age, email, village }) => {
+      const div = document.createElement("div");
+      div.id = "id" + c++;
+      div.className = "data";
+      div.innerText = `
+        firstName: ${firstName} \n
+        lastName: ${lastName} \n
+        age: ${age} \n
+        email: ${email} \n
+        village: ${village} \n
+      `;
+      const remove = document.createElement("button");
+      remove.className = "delete";
+      remove.innerText = "D";
+      div.appendChild(remove);
+      dashboard.appendChild(div);
+    }
+
+    dashboard.onclick = e => {
+      if (e.target.className === "delete") {
+        fetch("/dashboard/delete", {
+          method: "post",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(data[e.target.parentNode.id.slice(2)])
+        })
+          .then(res => {
+            reload();
+          })
+          .catch(err => {
+            console.log(err.message);
+          })
+      }
+    }
+
+    const reload = function () {
+      c = 0;
+      dashboard.innerHTML = "";
+      fetch("", {
+        method: "post"
+      })
+        .then(res => {
+          if (res.status !== 200) {
+            throw new Error("Not Success");
+          }
+          return res.json();
+
+        })
+        .then(res => {
+          data = res;
+          data.forEach(iv => {
+            createUI(iv);
+          })
+        })
+        .catch(err => {
+          console.log(err.message);
+        })
+    };
+    reload();
+  </script>
+</body>
+
+</html>
